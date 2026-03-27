@@ -1,7 +1,9 @@
-from typing import Any, Type
+from typing import Type
 
 
 class IntegerRange:
+    """Descriptor reutilizable para validación de rangos enteros."""
+
     def __init__(self, min_amount: int, max_amount: int) -> None:
         self.min_amount = min_amount
         self.max_amount = max_amount
@@ -9,12 +11,12 @@ class IntegerRange:
     def __set_name__(self, owner: type, name: str) -> None:
         self.protected_name = f"_{name}"
 
-    def __get__(self, instance: Any, owner: type) -> Any:
+    def __get__(self, instance: object, owner: type) -> object:
         if instance is None:
             return self
         return getattr(instance, self.protected_name, None)
 
-    def __set__(self, instance: Any, value: int) -> None:
+    def __set__(self, instance: object, value: int) -> None:
         if not isinstance(value, int):
             raise TypeError("Value must be an integer")
         if not (self.min_amount <= value <= self.max_amount):
@@ -26,6 +28,8 @@ class IntegerRange:
 
 
 class Visitor:
+    """Almacenamiento simple de datos del visitante."""
+
     def __init__(self,
                  name: str,
                  age: int,
@@ -38,6 +42,8 @@ class Visitor:
 
 
 class SlideLimitationValidator:
+    """Clase base que gatilla la validación de los descriptores hijos."""
+
     def __init__(self, age: int, weight: int, height: int) -> None:
         self.age = age
         self.weight = weight
@@ -57,6 +63,8 @@ class AdultSlideLimitationValidator(SlideLimitationValidator):
 
 
 class Slide:
+    """Orquestador de acceso a las atracciones."""
+
     def __init__(
         self,
         name: str,
@@ -66,6 +74,10 @@ class Slide:
         self.limitation_class = limitation_class
 
     def can_access(self, visitor: Visitor) -> bool:
+        """
+        Intenta instanciar el validador. Si los descriptores lanzan 
+        una excepción de tipo o valor, el acceso es denegado.
+        """
         try:
             self.limitation_class(
                 age=visitor.age,
