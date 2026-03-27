@@ -1,8 +1,7 @@
-from typing import Any, Type
+from typing import Any, Type, Optional
 
 
 class IntegerRange:
-
     def __init__(self, min_amount: int, max_amount: int) -> None:
         self.min_amount = min_amount
         self.max_amount = max_amount
@@ -13,7 +12,7 @@ class IntegerRange:
     def __get__(self, instance: Any, owner: type) -> Any:
         if instance is None:
             return self
-        return getattr(instance, self.protected_name)
+        return getattr(instance, self.protected_name, None)
 
     def __set__(self, instance: Any, value: int) -> None:
         if not isinstance(value, int):
@@ -27,7 +26,6 @@ class IntegerRange:
 
 
 class Visitor:
-
     def __init__(self,
                  name: str,
                  age: int,
@@ -40,7 +38,6 @@ class Visitor:
 
 
 class SlideLimitationValidator:
-
     def __init__(self, age: int, weight: int, height: int) -> None:
         self.age = age
         self.weight = weight
@@ -60,9 +57,11 @@ class AdultSlideLimitationValidator(SlideLimitationValidator):
 
 
 class Slide:
-
-    def __init__(self, name: str,
-                 limitation_class: Type[SlideLimitationValidator]) -> None:
+    def __init__(
+        self, 
+        name: str, 
+        limitation_class: Type[SlideLimitationValidator]
+    ) -> None:
         self.name = name
         self.limitation_class = limitation_class
 
