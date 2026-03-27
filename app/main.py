@@ -1,6 +1,5 @@
 from typing import Any, Type
 
-
 class IntegerRange:
 
     def __init__(self, min_amount: int, max_amount: int) -> None:
