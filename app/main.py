@@ -1,4 +1,4 @@
-from typing import Any, Type, Optional
+from typing import Any, Type
 
 
 class IntegerRange:
@@ -58,8 +58,8 @@ class AdultSlideLimitationValidator(SlideLimitationValidator):
 
 class Slide:
     def __init__(
-        self, 
-        name: str, 
+        self,
+        name: str,
         limitation_class: Type[SlideLimitationValidator]
     ) -> None:
         self.name = name
