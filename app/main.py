@@ -75,7 +75,7 @@ class Slide:
 
     def can_access(self, visitor: Visitor) -> bool:
         """
-        Intenta instanciar el validador. Si los descriptores lanzan 
+        Intenta instanciar el validador. Si los descriptores lanzan
         una excepción de tipo o valor, el acceso es denegado.
         """
         try:
